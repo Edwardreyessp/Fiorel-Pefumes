@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { type Perfume } from '@/entities';
 import dayjs from 'dayjs';
 import { perfumes } from '@/app/components/utils/perfumes';
+import { Layout } from '@/app/components/organisms';
 
 export default function ProductPage(): JSX.Element {
 	const [isHovered, setIsHovered] = useState(false);
@@ -45,73 +46,75 @@ export default function ProductPage(): JSX.Element {
 	const color = useTheme().palette.primary.main;
 
 	return (
-		<Box px={{ xs: 2, md: 30 }}>
-			<Box display={'flex'} alignItems={'center'} px={{ xs: '', md: 30 }}>
-				<Box
-					height={'24px'}
-					onPointerDown={e => {
-						e.preventDefault();
-					}}
-					sx={{ cursor: 'pointer' }}
-					onMouseEnter={() => {
-						setIsHovered(true);
-					}}
-					onMouseLeave={() => {
-						setIsHovered(false);
-					}}
-				>
-					<IconArrrowLeft color={isHovered ? color : '#000000'} />
-				</Box>
-				<Typography variant='subtitle1' pl={2}>
-					Volver a productos
-				</Typography>
-			</Box>
-
-			<Box display={{ xs: '', md: 'flex' }} justifyContent={'space-evenly'}>
-				<Box display={'flex'} justifyContent={'center'} pt={{ xs: 2, md: '' }}>
-					<CarruselProduct item={perfume} />
-				</Box>
-				<Stack spacing={2} pl={{ xs: '', md: 5 }}>
-					<Typography variant='subtitle1'>{perfume.name}</Typography>
-					<Typography variant='caption'>{perfume.brand}</Typography>
-					<Typography>${perfume.price}</Typography>
-					<QuantityProduct idProduct='' />
-					<Typography variant='subtitle1'>Descripción</Typography>
-					<SimpleTag text='Unisex' type='primary' />
-					<Typography maxWidth={{ sx: '50%', md: '435px' }}>
-						{perfume.description}
-					</Typography>
-					<Typography variant='subtitle1'>Escencias</Typography>
-					<Box display={'flex'} justifyContent={'space-evenly'}>
-						{perfume.notes.map((note, index) => (
-							<SimpleTag key={index} text={note} type='secondary' />
-						))}
+		<Layout>
+			<Box px={{ xs: 2, md: 30 }}>
+				<Box display={'flex'} alignItems={'center'} px={{ xs: '', md: 30 }}>
+					<Box
+						height={'24px'}
+						onPointerDown={e => {
+							e.preventDefault();
+						}}
+						sx={{ cursor: 'pointer' }}
+						onMouseEnter={() => {
+							setIsHovered(true);
+						}}
+						onMouseLeave={() => {
+							setIsHovered(false);
+						}}
+					>
+						<IconArrrowLeft color={isHovered ? color : '#000000'} />
 					</Box>
-					<ButtonSecondary
-						text={'Agregar al carrito'}
-						onClick={function (): void {
-							throw new Error('Function not implemented.');
-						}}
-					/>
-					<ButtonPrimary
-						text={'Comprar ahora'}
-						onClick={function (): void {
-							throw new Error('Function not implemented.');
-						}}
-					/>
-				</Stack>
-			</Box>
+					<Typography variant='subtitle1' pl={2}>
+						Volver a productos
+					</Typography>
+				</Box>
 
-			<Typography variant='subtitle1' textAlign={'center'} py={2}>
-				También te podría gustar
-			</Typography>
+				<Box display={{ xs: '', md: 'flex' }} justifyContent={'space-evenly'}>
+					<Box display={'flex'} justifyContent={'center'} pt={{ xs: 2, md: '' }}>
+						<CarruselProduct item={perfume} />
+					</Box>
+					<Stack spacing={2} pl={{ xs: '', md: 5 }}>
+						<Typography variant='subtitle1'>{perfume.name}</Typography>
+						<Typography variant='caption'>{perfume.brand}</Typography>
+						<Typography>${perfume.price}</Typography>
+						<QuantityProduct idProduct='' />
+						<Typography variant='subtitle1'>Descripción</Typography>
+						<SimpleTag text='Unisex' type='primary' />
+						<Typography maxWidth={{ sx: '50%', md: '435px' }}>
+							{perfume.description}
+						</Typography>
+						<Typography variant='subtitle1'>Escencias</Typography>
+						<Box display={'flex'} justifyContent={'space-evenly'}>
+							{perfume.notes.map((note, index) => (
+								<SimpleTag key={index} text={note} type='secondary' />
+							))}
+						</Box>
+						<ButtonSecondary
+							text={'Agregar al carrito'}
+							onClick={function (): void {
+								throw new Error('Function not implemented.');
+							}}
+						/>
+						<ButtonPrimary
+							text={'Comprar ahora'}
+							onClick={function (): void {
+								throw new Error('Function not implemented.');
+							}}
+						/>
+					</Stack>
+				</Box>
 
-			<Box display={'flex'} justifyContent={'space-evenly'}>
-				{/* Mapea las tarjetas según el número determinado */}
-				{[...Array(cardsToShow)].map((_, index) => (
-					<CardProduct key={index} perfume={perfumes[index]} />
-				))}
+				<Typography variant='subtitle1' textAlign={'center'} py={2}>
+					También te podría gustar
+				</Typography>
+
+				<Box display={'flex'} justifyContent={'space-evenly'}>
+					{/* Mapea las tarjetas según el número determinado */}
+					{[...Array(cardsToShow)].map((_, index) => (
+						<CardProduct key={index} perfume={perfumes[index]} />
+					))}
+				</Box>
 			</Box>
-		</Box>
+		</Layout>
 	);
 }

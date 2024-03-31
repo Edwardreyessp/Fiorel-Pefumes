@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import MuiTheme from '@/app/MuiTheme';
-import { CarritoProvider } from './components/utils/Carrito';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,10 +30,9 @@ export default function RootLayout({
 				></link>
 			</head>
 			<body className={inter.className}>
-				<MuiTheme>
-					<CarritoProvider>{children}</CarritoProvider>
-				</MuiTheme>
+				<MuiTheme>{children}</MuiTheme>
 			</body>
-		</html>
+
+		</html >
 	);
 }

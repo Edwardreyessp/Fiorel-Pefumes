@@ -12,10 +12,13 @@ export * from './Tabs';
 export * from './CardAdmin';
 export * from './ProcederPago';
 export * from './StatusPicker';
+export * from './IconTable';
 export * from './CardNewsletter';
+export * from './Category';
 export * from './CardCoupon';
 export * from './DragAndDrop';
 export * from './CardNews';
 export * from './Cardcolor';
 export * from './Newsletter';
 export * from './Loaders';
+

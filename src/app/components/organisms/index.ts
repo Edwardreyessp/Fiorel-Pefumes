@@ -1,4 +1,5 @@
 export * from './CardOrder';
+export * from './CategoryPicker';
 export * from './NewsletterForm';
 export * from './KnowUs';
 export * from './QuestionHome';
@@ -8,3 +9,4 @@ export * from './ChangePassword';
 export * from './Orders';
 export * from './ChangeInfo';
 export * from './DrawerCart';
+export * from './Layout';

@@ -1,7 +1,7 @@
 "use client"
 import { Box, Stack, useMediaQuery, } from "@mui/material";
 import { CarruselImage } from "./components/atoms/Carrusel";
-import { KnowUs, QuestionHome, ReviewsHome } from "./components/organisms";
+import { KnowUs, Layout, QuestionHome, ReviewsHome } from "./components/organisms";
 import { useTheme } from "@mui/system";
 
 
@@ -28,22 +28,23 @@ export default function Home(): JSX.Element {
 
 	return (
 		<main>
-			<Stack spacing={2} >
-				<CarruselImage images={images} />
-				<KnowUs />
-				<Box
-					position="relative"
-					height={{ xs: "1097px", sm: "600px" }}
-					width={"100%"}
-					sx={{
-						backgroundImage: `url("${Banner}")`,
-						backgroundSize: "cover",
-					}}
-				/>
-				<QuestionHome />
-				<ReviewsHome />
-			</Stack>
-
+			<Layout>
+				<Stack spacing={2} >
+					<CarruselImage images={images} />
+					<KnowUs />
+					<Box
+						position="relative"
+						height={{ xs: "1097px", sm: "600px" }}
+						width={"100%"}
+						sx={{
+							backgroundImage: `url("${Banner}")`,
+							backgroundSize: "cover",
+						}}
+					/>
+					<QuestionHome />
+					<ReviewsHome />
+				</Stack>
+			</Layout>
 		</main>
 	);
 }

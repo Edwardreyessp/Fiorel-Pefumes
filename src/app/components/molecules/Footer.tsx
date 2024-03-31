@@ -20,6 +20,8 @@ export const Footer = (): JSX.Element => {
 		</>
 	);
 };
+
+
 const handleSubmit = (email: string): void => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -66,15 +68,15 @@ const DesktopFooter = (): JSX.Element => {
 	};
 
 	const linksNecesitasAyuda = [
-		{ name: 'Llámanos al 800-737-4072', href: '/#contact-us' },
-		{ name: 'Lunes a Sábado de 9 am a 9 pm', href: '/#contact-us' },
+		{ name: 'Llámanos al 800-737-4072', href: '/' },
+		{ name: 'Lunes a Sábado de 9 am a 9 pm', href: '/' },
 	];
-	const linksNosotros = [{ name: 'Quienes somos', href: '/#about-us' }];
+	const linksNosotros = [{ name: 'Quienes somos', href: '/nosotros' }];
 
 	const linksAtencionCliente = [
-		{ name: 'Preguntas frecuentes', href: '/#faq' },
-		{ name: 'Cancelación y devoluciones', href: '/#cancelations' },
-		{ name: 'Envíos', href: '/#shipping' },
+		{ name: 'Preguntas frecuentes', href: '/faqs' },
+		{ name: 'Cancelación y devoluciones', href: '/cancelaciones' },
+		{ name: 'Envíos', href: '/' },
 	];
 
 	return (
@@ -85,7 +87,7 @@ const DesktopFooter = (): JSX.Element => {
 					color: '#fff',
 					padding: '20px',
 					flexShrink: 0,
-					display: { xs: 'none', sm: 'block' },
+					display: { xs: 'none', md: 'block' },
 				}}
 			>
 				<Grid container spacing={2}>
@@ -162,7 +164,7 @@ const DesktopFooter = (): JSX.Element => {
 					padding: '10px',
 					textAlign: 'center',
 					borderTop: '1px solid #fff',
-					display: { xs: 'none', sm: 'flex' },
+					display: { xs: 'none', md: 'flex' },
 					gap: 2,
 				}}
 				justifyContent='center'
@@ -197,15 +199,15 @@ const PhoneFooter = (): JSX.Element => {
 	const router = useRouter();
 
 	const linksNecesitasAyuda = [
-		{ name: 'Llámanos al 800-737-4072', href: '/#contact-us' },
-		{ name: 'Lunes a Sábado de 9 am a 9 pm', href: '/#contact-us' },
+		{ name: 'Llámanos al 800-737-4072', href: '/' },
+		{ name: 'Lunes a Sábado de 9 am a 9 pm', href: '/' },
 	];
-	const linksNosotros = [{ name: 'Quienes somos', href: '/#about-us' }];
+	const linksNosotros = [{ name: 'Quiénes somos', href: '/nosotros' }];
 
 	const linksAtencionCliente = [
-		{ name: 'Preguntas frecuentes', href: '/#faq' },
-		{ name: 'Cancelación y devoluciones', href: '/#cancelations' },
-		{ name: 'Envíos', href: '/#shipping' },
+		{ name: 'Preguntas frecuentes', href: '/faqs' },
+		{ name: 'Cancelación y devoluciones', href: '/' },
+		{ name: 'Envíos', href: '/' },
 	];
 
 	return (
@@ -216,7 +218,7 @@ const PhoneFooter = (): JSX.Element => {
 					color: '#fff',
 					padding: '20px',
 					flexShrink: 0,
-					display: { xs: 'block', sm: 'none' },
+					display: { xs: 'block', md: 'none' },
 				}}
 			>
 				<Grid container spacing={2}>
@@ -260,7 +262,7 @@ const PhoneFooter = (): JSX.Element => {
 					{/* Atencion al cliente */}
 					<Grid xs={12}>
 						<AccordionFooter
-							title='Atencion al cliente'
+							title='Atención al cliente'
 							links={linksAtencionCliente}
 						/>
 					</Grid>
@@ -290,7 +292,7 @@ const PhoneFooter = (): JSX.Element => {
 					color: 'white',
 					textAlign: 'center',
 					borderTop: '1px solid #fff',
-					display: { sm: 'none' },
+					display: { md: 'none' },
 				}}
 				justifyContent='center'
 				gap={1}
