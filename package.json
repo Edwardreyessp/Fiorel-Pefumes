@@ -1,0 +1,53 @@
+{
+	"name": "fiorel",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@emotion/cache": "^11.11.0",
+		"@emotion/react": "^11.11.3",
+		"@emotion/styled": "^11.11.0",
+		"@mui/material": "^5.15.7",
+		"@mui/material-nextjs": "^5.15.7",
+		"@mui/x-date-pickers": "^6.19.4",
+		"@paypal/checkout-server-sdk": "^1.0.3",
+		"@paypal/react-paypal-js": "^8.2.0",
+		"@types/paypal__checkout-server-sdk": "^1.0.8",
+		"@types/react-swipeable-views": "^0.13.5",
+		"@types/react-swipeable-views-utils": "^0.13.7",
+		"dayjs": "^1.11.10",
+		"firebase": "^10.8.0",
+		"generate-unique-id": "^2.0.3",
+		"next": "14.0.4",
+		"react": "^18",
+		"react-dom": "^18",
+		"react-dropzone": "^14.2.3",
+		"react-hook-form": "^7.51.2",
+		"react-swipeable-views": "^0.14.0",
+		"react-swipeable-views-utils": "^0.14.0",
+		"resend": "^3.2.0",
+		"xlsx": "^0.18.5"
+	},
+	"devDependencies": {
+		"@iconify/react": "^4.1.1",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"@typescript-eslint/eslint-plugin": "^6.4.0",
+		"eslint": "^8.0.1",
+		"eslint-config-next": "14.0.4",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-config-standard-with-typescript": "^43.0.0",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-react": "^7.33.2",
+		"prettier": "^3.2.1",
+		"typescript": "*"
+	}
+}
