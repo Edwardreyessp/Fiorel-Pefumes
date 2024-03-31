@@ -1,5 +1,4 @@
 export * from './CardOrder';
-export * from './CategoryPicker';
 export * from './NewsletterForm';
 export * from './KnowUs';
 export * from './QuestionHome';
