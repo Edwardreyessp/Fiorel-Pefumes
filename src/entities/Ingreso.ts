@@ -2,7 +2,7 @@ import { type Perfume } from './Perfume';
 
 export interface Ingreso {
 	_id: string;
-	_idPerfume: Perfume['_id'];
+	_idPerfume: Perfume['id'];
 	comision: number;
 	date: Date;
 	netIncome: number;

@@ -24,7 +24,7 @@ export default function BannersPage(): JSX.Element {
 
 	return (
 		<main>
-			<Box >
+			<Box>
 				<Typography variant='h1'>Banners</Typography>
 				<p>Breadcrumb</p>
 				<BasicTabs tabs={tabs} />
@@ -103,6 +103,8 @@ const HomeBanners = (): JSX.Element => {
 						handleEdit={() => {
 							handleEdit(banner.id);
 						}}
+						imageHeight={20}
+						imageWidth={20}
 					/>
 				))}
 			</Box>
@@ -175,6 +177,8 @@ const HomeMidSectionBanners = (): JSX.Element => {
 						handleEdit={() => {
 							handleEdit(banner.id);
 						}}
+						imageHeight={20}
+						imageWidth={20}
 					/>
 				))}
 			</Box>
@@ -242,6 +246,8 @@ const AboutUsBanners = (): JSX.Element => {
 						handleEdit={() => {
 							handleEdit(banner.id);
 						}}
+						imageHeight={20}
+						imageWidth={20}
 					/>
 				))}
 			</Box>

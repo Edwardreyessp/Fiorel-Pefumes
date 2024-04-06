@@ -9,7 +9,7 @@ interface DiscountProps {
 export const Discount = ({ discount, price }: DiscountProps): JSX.Element => {
 	return (
 		<Box display='flex' gap={1} mb='-5px'>
-			{discount !== undefined && (
+			{discount !== 0 && (
 				<Typography sx={{ textDecoration: 'line-through' }} color='#999999'>
 					${discount}
 				</Typography>

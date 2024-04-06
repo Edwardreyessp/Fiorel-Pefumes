@@ -60,8 +60,8 @@ export default function PaymanetPage(): JSX.Element {
 				>
 					{perfumes.map(perfume => (
 						<CardCart
-							key={perfume._id}
-							id={perfume._id}
+							key={perfume.id}
+							id={perfume.id}
 							name={perfume.name}
 							price={perfume.price}
 							image={perfume.images[0]}

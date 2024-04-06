@@ -7,7 +7,7 @@ interface ButtonProps {
 	text: string;
 	startIcon?: JSX.Element;
 	endIcon?: JSX.Element;
-	onClick: () => void;
+	onClick: () => void
 }
 
 export const ButtonPrimary = ({

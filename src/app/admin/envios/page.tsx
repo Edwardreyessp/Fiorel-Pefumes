@@ -12,7 +12,7 @@ import {
 	type StatusOption,
 	type CardOrderProps,
 } from '@/app/components/organisms';
-import { type Perfume } from '@/entities';
+import { perfume } from '@/app/components/utils/perfumes';
 import { Grid, IconButton, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
@@ -70,30 +70,6 @@ const RenderEnvios = (): JSX.Element => {
 		setOrders(ordenes);
 	}, []);
 
-	const perfumeUno: Perfume = {
-		_id: '1',
-		name: 'Sauvage',
-		brand: 'Dior',
-		description: 'Eau de Parfum',
-		sells: 100,
-		price: 1500,
-		discount: 0,
-		essence: {
-			id: '1',
-			name: 'Citrico',
-			icon: 'citrico',
-		},
-		status: 'published',
-		stock: 10,
-		images: [''],
-		slug: 'sauvage',
-
-		gender: 'Hombre',
-		family: 'familia',
-		notes: ['note'],
-		createdAt: dayjs('2018-08-08'),
-	};
-
 	const ordenes: CardOrderProps[] = [
 		{
 			orderId: '123456',
@@ -101,7 +77,7 @@ const RenderEnvios = (): JSX.Element => {
 			date: 'Hace 2 horas',
 			option: orderUno,
 			setOption: setOrderUno,
-			perfumes: [perfumeUno],
+			perfumes: [perfume],
 		},
 		{
 			orderId: '123457',
@@ -109,7 +85,7 @@ const RenderEnvios = (): JSX.Element => {
 			date: 'Hace 3 horas',
 			option: orderDos,
 			setOption: setOrderDos,
-			perfumes: [perfumeUno],
+			perfumes: [perfume],
 		},
 	];
 

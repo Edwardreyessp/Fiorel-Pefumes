@@ -12,9 +12,12 @@ export const PayPalButton = (): JSX.Element => {
 			<PayPalButtons
 				style={{ layout: 'vertical' }}
 				createOrder={async () => {
-					const res = await fetch('http://localhost:3000/api/checkout', {
-						method: 'POST',
-					});
+					const res = await fetch(
+						`${process.env.NEXT_PUBLIC_API_URL}/carrito`,
+						{
+							method: 'POST',
+						},
+					);
 					const order = await res.json();
 					console.log(order);
 					return order.id;

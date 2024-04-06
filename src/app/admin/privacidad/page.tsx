@@ -1,137 +1,101 @@
 'use client';
+import { putPrivacy, getPrivacy } from '@/firebase';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { Box, TextField, Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-
-import {
-	BreadCrumb,
-	ButtonPrimary,
-	ButtonSecondary,
-} from '@/app/components/atoms';
-
-export default function PrivacityPage(): JSX.Element {
-	const [displayTextField, setDisplayTextField] = useState<'none' | 'flex'>(
-		'none',
-	);
-	const [editing, setEditing] = useState(false);
-	const [aviso, setAviso] = useState<null | {
-		text: string[];
-		updated: string;
-	}>(null);
-	const [avisoText, setAvisoText] = useState('\n');
+const PrivacityPage = (): JSX.Element => {
+	const router = useRouter();
+	const [isLoading, setIsLoading] = useState(true);
+	const [textProps, setTextProps] = useState({
+		isEditing: false,
+		text: 'Aviso de privacidad',
+		content: 'Aviso de privacidad',
+		updateAt: '2021-10-10',
+	});
 
 	useEffect(() => {
-		// fetch aviso de privacidad
-		setAviso(avisoEjemplo);
+		const fetchData = async (): Promise<void> => {
+			const privacy = await getPrivacy();
+			setTextProps(prev => ({ ...prev, ...privacy, text: privacy.content }));
+			setIsLoading(false);
+		};
+		fetchData().catch(console.error);
 	}, []);
 
-	const handleUpdateClick = (): void => {
-		setEditing(false);
-		setDisplayTextField('none');
+	const handleEdit = (): void => {
+		setTextProps({ ...textProps, isEditing: true });
+	};
 
-		const parrafos = avisoText.split('\\n');
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		setTextProps({ ...textProps, text: e.target.value });
+	};
 
-		setAviso({
-			text: parrafos,
-			updated: new Date().toDateString(),
+	const onSave = async (): Promise<void> => {
+		await putPrivacy(textProps.text);
+		setTextProps({ ...textProps, isEditing: false, content: textProps.text });
+		router.refresh();
+	};
+
+	const onCancel = (): void => {
+		setTextProps({
+			...textProps,
+			isEditing: false,
+			text: textProps.content,
 		});
-		setAvisoText('');
-		// Aqui se manda el aviso al back pa
 	};
 
-	const handleAvisoChange = (
-		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-	): void => {
-		if (event.target.value.includes('\n')) {
-			setAvisoText(event.target.value.replace(/\n/g, '\\n'));
-		} else {
-			setAvisoText(event.target.value);
-		}
-	};
-
-	const handleCancelClick = (): void => {
-		setDisplayTextField('none');
-		setEditing(false);
-		setAvisoText('');
-	};
-
-	const avisoEjemplo = {
-		text: [
-			`Este aviso de privacidad establece los términos en que usa y protege la información que es proporcionada por sus usuarios al momento de utilizar su sitio web. Esta empresa está comprometida con la seguridad de los datos de sus usuarios. Cuando le pedimos llenar los campos de información personal con la cual usted pueda ser identificado, lo hacemos asegurando que sólo se empleará de acuerdo con los términos de este documento. Sin embargo este aviso de privacidad puede cambiar con el tiempo o ser actualizado por lo que le recomendamos y enfatizamos revisar continuamente esta página para asegurarse que está de acuerdo con dichos cambios.`,
-			`Información que es recogida: Nuestro sitio web podrá recoger información personal por ejemplo: Nombre, información de contacto como su dirección de correo electrónica e información demográfica. Así mismo cuando sea necesario podrá ser requerida información específica para procesar algún pedido o realizar una entrega o facturación.`,
-		],
-		updated: '2021-10-10',
-	};
+	if (isLoading) {
+		return <Typography>Loading...</Typography>;
+	}
 
 	return (
-		<main>
-			<Box>
+		<Stack spacing={2}>
+			<Box display='flex' gap={4} alignItems='center'>
 				<Typography variant='h1'>Aviso de privacidad</Typography>
-				<BreadCrumb />
-				<Grid container marginTop={3} spacing={2}>
-					<Grid
-						xs={12}
-						style={{
-							display: displayTextField,
-							transition: 'opacity 0.5s ease-out', // Apply transition to opacity property
-						}}
-					>
-						<TextField
-							fullWidth
-							multiline
-							maxRows={20}
-							placeholder='Este aviso de privacidad establece...'
-							onChange={handleAvisoChange}
-						/>
-					</Grid>
-					<Grid my={3} xs={12}>
-						{editing ? (
-							<>
-								<Grid>
-									<ButtonPrimary
-										text='Actualizar'
-										onClick={handleUpdateClick}
-									/>
-								</Grid>
-								<Grid>
-									<ButtonSecondary
-										text='Cancelar'
-										onClick={handleCancelClick}
-									/>
-								</Grid>
-							</>
-						) : (
-							<ButtonPrimary
-								text='Actualizar'
-								onClick={() => {
-									setDisplayTextField('flex');
-									setEditing(true);
-								}}
-							/>
-						)}
-					</Grid>
-					<Grid xs={12}>
-						<Typography variant='h1'>Vista previa</Typography>
-					</Grid>
-					<Grid xs={12}>
-						<Typography variant='h1'>Aviso de privacidad</Typography>
-					</Grid>
-					<Grid xs={12}>
-						<Typography variant='caption'>
-							{aviso?.updated != null &&
-								`ultima actualizacion: ${aviso.updated}`}
-						</Typography>
-					</Grid>
-					<Grid xs={12}>
-						{aviso?.text.map((parrafo, index) => (
-							<Typography py={1} key={index} variant='body1'>
-								{parrafo}
-							</Typography>
-						))}
-					</Grid>
-				</Grid>
+				{!textProps.isEditing ? (
+					<Button variant='contained' sx={{ mt: '4px' }} onClick={handleEdit}>
+						Editar
+					</Button>
+				) : (
+					<>
+						<Button
+							variant='contained'
+							color='secondary'
+							sx={{ mt: '4px' }}
+							onClick={onCancel}
+						>
+							Cancelar
+						</Button>
+						<Button
+							variant='contained'
+							onClick={() => {
+								onSave().catch(console.error);
+							}}
+							sx={{ mt: '4px' }}
+						>
+							Guardar
+						</Button>
+					</>
+				)}
 			</Box>
-		</main>
+			<Typography variant='caption'>
+				Última actualización: {textProps.updateAt}
+			</Typography>
+			{!textProps.isEditing ? (
+				<Typography sx={{ whiteSpace: 'pre-line' }}>
+					{textProps.content}
+				</Typography>
+			) : (
+				<TextField
+					multiline
+					rows={10}
+					value={textProps.text}
+					onChange={onChange}
+				/>
+			)}
+		</Stack>
 	);
-}
+};
+
+export default PrivacityPage;

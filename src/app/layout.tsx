@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import MuiTheme from '@/app/MuiTheme';
+import { PerfumeProvider } from '@/providers/PerfumeProvider';
+import ColorProvider from './components/organisms/ColorProvider';
+import { TagsProvider } from '@/providers/TagsProvider';
+import { CarritoProvider } from '@/providers/CarritoProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,9 +34,16 @@ export default function RootLayout({
 				></link>
 			</head>
 			<body className={inter.className}>
-				<MuiTheme>{children}</MuiTheme>
+				<ColorProvider>
+					<MuiTheme>
+						<TagsProvider>
+							<PerfumeProvider>
+								<CarritoProvider>{children}</CarritoProvider>
+							</PerfumeProvider>
+						</TagsProvider>
+					</MuiTheme>
+				</ColorProvider>
 			</body>
-
-		</html >
+		</html>
 	);
 }

@@ -1,154 +1,134 @@
 'use client';
-import { ButtonSecondary, Checkbox, IconCircle } from '@/app/components/atoms';
-import { CardInventario, Newsletter } from '@/app/components/molecules';
+import { Checkbox, IconCircle } from '@/app/components/atoms';
+import { Newsletter } from '@/app/components/molecules';
 import { useTheme } from '@mui/material/styles';
-import { Box, Stack, Typography, useMediaQuery } from '@mui/material';
-import { type ChangeEvent, useState } from 'react';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { type ChangeEvent, useState, useContext } from 'react';
+import { ProductList } from './ProductList';
+import { PerfumeContext } from '@/providers/PerfumeProvider';
+import { useRouter } from 'next/navigation';
+import { TagContext } from '@/providers/TagsProvider';
 
 export default function InventoryPage(): JSX.Element {
-	const [Stock, setStock] = useState(false);
-	const [outStock, setooutStock] = useState(false);
-	const [published, setPublished] = useState(false);
-	const [unpublished, setUnpublished] = useState(false);
 	const [search, setSearch] = useState('');
-
-	const pushStock = (event: boolean): void => {
-		setStock(event);
-	};
-
-	const pushOutStock = (event: boolean): void => {
-		setooutStock(event);
-	};
-
-	const pushPublished = (event: boolean): void => {
-		setPublished(event);
-	};
-
-	const pushUnpublished = (event: boolean): void => {
-		setUnpublished(event);
-	};
+	const router = useRouter();
+	const { filterPerfumes } = useContext(PerfumeContext);
+	const { updateTags } = useContext(TagContext);
+	const [filters, setFilters] = useState({
+		withStock: false,
+		noStock: false,
+		published: false,
+		draft: false,
+	});
 
 	const handleSubmit = (): void => {
-		console.log('se detona la busqueda de' + search + ' en el inventario');
+		filterPerfumes({ ...filters, search });
 	};
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		setSearch(event.target.value);
+		filterPerfumes({ ...filters, search: event.target.value });
 	};
 
-	const onPush = (): void => {
-		window.location.href = '/admin/inventario/edit';
+	const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
+		const key = event.target.id;
+		setFilters({
+			...filters,
+			[key]: !filters[key as keyof typeof filters],
+		});
+
+		filterPerfumes({
+			...filters,
+			[key]: !filters[key as keyof typeof filters],
+			search,
+		});
 	};
 
-	const isDesktop = useMediaQuery(useTheme().breakpoints.up('sm'));
+	const addProduct = (): void => {
+		updateTags({ categoryID: null, familyID: null, essencesID: [] });
+		router.push('/admin/inventario/crear');
+	};
+
 	const color = useTheme().palette.primary.main;
 
 	return (
-		<main>
-			<Stack spacing={2} >
-				<Typography variant='h1'>Inventario</Typography>
-				<Typography variant='caption'>Aquí se mostrará el breadcrum</Typography>
-				{/* TODO:AGREGAR EL INVENTARIO */}
-				<Box
-					display={isDesktop ? 'flex' : ''}
-					justifyContent={'space-between'}
-					sx={{ borderBottom: ' 1px solid #000' }}
-					pb={3}
-				>
-					<Box display={isDesktop ? 'flex' : ''}>
-						<Stack
-							sx={{ borderBottom: isDesktop ? '' : '1px solid ' + color }}
-							pb={isDesktop ? '' : 2}
-							spacing={isDesktop ? 2 : ''}
-						>
-							<Checkbox label='Stock' checked={Stock} onChange={pushStock} />
-							<Checkbox
-								label='Sin stock'
-								checked={outStock}
-								onChange={pushOutStock}
-							/>
-						</Stack>
-						<Stack
-							pt={isDesktop ? '' : 2}
-							pb={isDesktop ? '' : 2}
-							spacing={isDesktop ? 2 : ''}
-						>
-							<Checkbox
-								label='Publicado'
-								checked={published}
-								onChange={pushPublished}
-							/>
-							<Checkbox
-								label='No publicado'
-								checked={unpublished}
-								onChange={pushUnpublished}
-							/>
-						</Stack>
-					</Box>
-					<Stack spacing={2}>
-						<Box>
-							<Newsletter
-								idInput={'Buscar por id'}
-								labelInput={'Buscar por id'}
-								labelButton={'Buscar'}
-								handleChange={handleChange}
-								handleSubmit={handleSubmit}
-							/>
-						</Box>
-						<Box>
-							<ButtonSecondary text={'Agregar producto'} onClick={onPush} />
-						</Box>
+		<Stack spacing={2}>
+			{/* TODO:AGREGAR EL INVENTARIO */}
+			<Box
+				display={{ xs: 'block', md: 'flex' }}
+				justifyContent={'space-between'}
+				sx={{ borderBottom: ' 1px solid #000' }}
+				pb={3}
+			>
+				<Box display={{ xs: 'block', md: 'flex' }}>
+					<Stack
+						sx={{ borderBottom: { xs: `1px solid ${color}`, md: 'none' } }}
+						pb={{ xs: 2, md: 0 }}
+						spacing={{ xs: 0, md: 2 }}
+					>
+						<Checkbox
+							id='withStock'
+							label='Stock'
+							checked={filters.withStock}
+							onChange={onChange}
+						/>
+						<Checkbox
+							id='noStock'
+							label='Sin stock'
+							checked={filters.noStock}
+							onChange={onChange}
+						/>
+					</Stack>
+					<Stack py={{ xs: 2, md: 0 }} spacing={{ xs: 2, md: 2 }}>
+						<Checkbox
+							id='published'
+							label='Publicado'
+							checked={filters.published}
+							onChange={onChange}
+						/>
+						<Checkbox
+							id='draft'
+							label='No publicado'
+							checked={filters.draft}
+							onChange={onChange}
+						/>
 					</Stack>
 				</Box>
-
-				<Stack spacing={3}>
-					<Box display={'flex'}>
-						<Box display={'flex'} height={'24px'} pr={2}>
-							<IconCircle color={'#45D053'} />
-							<Typography variant='body2' pl={1}>
-								Publicado
-							</Typography>
-						</Box>
-						<Box display={'flex'} height={'24px'}>
-							<IconCircle color={'#FFC20A'} />
-							<Typography variant='body2' pl={1}>
-								No publicado
-							</Typography>
-						</Box>
+				<Stack spacing={2}>
+					<Box>
+						<Newsletter
+							idInput={'search'}
+							labelInput={'Buscar por nombre'}
+							labelButton={'Buscar'}
+							handleChange={handleChange}
+							handleSubmit={handleSubmit}
+						/>
 					</Box>
-					{/* Agregar mapeo de card Inventario */}
-					<CardInventario
-						urlImage={'/images/perfume1.png'}
-						name={'Fragancia'}
-						date={'19/02/29'}
-						id={'#455'}
-						stock={0}
-						isAvailable={true}
-						IconEditFuction={onPush}
-						IconTrashFuction={() => {
-							onPush();
-						}}
-						onClick={() => {
-							onPush();
-						}}
-					/>
-					<CardInventario
-						urlImage={'/images/perfume1.png'}
-						name={'Fragancia'}
-						date={'19/02/29'}
-						id={'#455'}
-						stock={0}
-						isAvailable={false}
-						IconEditFuction={onPush}
-						IconTrashFuction={() => {
-							onPush();
-						}}
-						onClick={() => {
-							onPush();
-						}}
-					/>
+					<Button
+						fullWidth
+						variant='contained'
+						color='secondary'
+						onClick={addProduct}
+					>
+						Agregar producto
+					</Button>
 				</Stack>
+			</Box>
+
+			<Stack spacing={3}>
+				<Box display={'flex'} gap={2}>
+					<Box display={'flex'} height={'24px'} gap={1}>
+						<IconCircle color={'#45D053'} />
+						<Typography variant='body2'>Publicado</Typography>
+					</Box>
+					<Box display={'flex'} height={'24px'} gap={1}>
+						<IconCircle color={'#FFC20A'} />
+						<Typography variant='body2'>No publicado</Typography>
+					</Box>
+				</Box>
+
+				<ProductList />
 			</Stack>
-		</main>
+		</Stack>
 	);
 }

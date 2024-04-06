@@ -1,60 +1,29 @@
 "use client"
-import { ButtonPrimary } from "@/app/components/atoms";
+import { BreadCrumb, ButtonPrimary } from "@/app/components/atoms";
 import CardReviews from "@/app/components/molecules/CardReview";
-import { Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { type Review } from "@/entities/Review";
+import { getReviews } from "@/firebase/reviews";
+import { Skeleton, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function ReviewsPage(): JSX.Element {
 
-	const reviews = [
-		{
-			question: "¿Qué es Lorem Ipsum?",
-			answer: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto."
-		},
-		{
-			question: "¿Por qué lo usamos?",
-			answer: "Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño."
-		},
-		{
-			question: "¿Dónde puedo conseguirlo?",
-			answer: "Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera."
-		},
-		{
-			question: "¿Qué es Lorem Ipsum?",
-			answer: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto."
-		},
-		{
-			question: "¿Por qué lo usamos?",
-			answer: "Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño."
-		},
-		{
-			question: "¿Dónde puedo conseguirlo?",
-			answer: "Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera."
-		},
-		{
-			question: "¿Qué es Lorem Ipsum?",
-			answer: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto."
-		},
-		{
-			question: "¿Por qué lo usamos?",
-			answer: "Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño."
-		},
-		{
-			question: "¿Dónde puedo conseguirlo?",
-			answer: "Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera."
-		},
-		{
-			question: "¿Qué es Lorem Ipsum?",
-			answer: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto."
-		},
-		{
-			question: "¿Por qué lo usamos?",
-			answer: "Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño."
-		},
-		{
-			question: "¿Dónde puedo conseguirlo?",
-			answer: "Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera."
-		},
-	];
+	const [ReviewData, setReviewData] = useState<Review[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchData = async (): Promise<void> => {
+			try {
+				const ReviewData = await getReviews();
+				setReviewData(ReviewData);
+				setIsLoading(false);
+			} catch (error) {
+				setIsLoading(false);
+			}
+		};
+
+		void fetchData();
+	}, []);
 
 	const changeToUpdate = (): void => {
 		window.location.href = "/admin/reviews/edit";
@@ -65,16 +34,13 @@ export default function ReviewsPage(): JSX.Element {
 
 	return <main><Stack spacing={2} p={isDesktop ? "40px" : "20px"}>
 		<Typography variant="h1">Preguntas Frecuentes</Typography>
-		<Typography variant="caption">Esto será un breadcrumb</Typography>
+		<BreadCrumb />
 		<ButtonPrimary text={"Actualizar"} onClick={changeToUpdate} />
 		<Stack spacing={2} overflow="auto" alignItems={"center"}>
-			{reviews.map((review, index) => (
-				<CardReviews
-					key={index}
-					title={review.question}
-					review={review.answer}
-				/>
-			))}
+			{isLoading ?
+				<><Skeleton variant="rectangular" sx={{ width: { xs: 354, sm: 400 }, height: "300px" }} /><Skeleton variant="rectangular" sx={{ width: { xs: 354, sm: 400 }, height: "300px" }} /></>
+				:
+				ReviewData.map((review, index) => <CardReviews key={index} title={review.title} review={review.review} />)}
 		</Stack>
 	</Stack></main>;
 }
