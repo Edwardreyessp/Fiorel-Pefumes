@@ -73,9 +73,9 @@ export const DrawerCart = (props: DrawerProps): JSX.Element => {
 					) : (
 						items.map(item => (
 							<CardCart
-								key={item.item._id}
+								key={item.item.id}
 								// item={item} // * Solo se debería pasar el item
-								id={item.item._id}
+								id={item.item.id}
 								name={item.item.name}
 								price={item.item.price}
 								discount={item.item.discount}

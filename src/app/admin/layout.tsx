@@ -1,13 +1,9 @@
-import { AdminNavbar } from "../components/molecules";
+import { AdminNavbar } from '../components/molecules';
 
-
-export default function layout(
-  { children }: { children: React.ReactNode }
-): JSX.Element {
-  return (
-    <AdminNavbar>
-      {children}
-    </AdminNavbar>
-  );
+export default function layout({
+	children,
+}: {
+	children: React.ReactNode;
+}): JSX.Element {
+	return <AdminNavbar>{children}</AdminNavbar>;
 }
-

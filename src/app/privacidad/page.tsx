@@ -10,12 +10,14 @@ export default function PrivacityPage(): JSX.Element {
 			<Stack spacing={4} p={4}>
 				<Stack spacing={1}>
 					<Typography variant='h1'>Aviso de privacidad</Typography>
-					<Typography variant='caption'>Última actualización: {date}</Typography>
+					<Typography variant='caption'>
+						Última actualización: {date}
+					</Typography>
 				</Stack>
 				<Typography style={{ whiteSpace: 'pre-line' }}>
 					{privacityText}
 				</Typography>
 			</Stack>
-		</Layout >
+		</Layout>
 	);
 }

@@ -11,33 +11,18 @@ import { CardProduct } from '@/app/components/molecules';
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { type Perfume } from '@/entities';
-import dayjs from 'dayjs';
-import { perfumes } from '@/app/components/utils/perfumes';
+import {
+	perfume as perfumeUtil,
+	perfumes,
+} from '@/app/components/utils/perfumes';
 import { Layout } from '@/app/components/organisms';
 
 export default function ProductPage(): JSX.Element {
 	const [isHovered, setIsHovered] = useState(false);
-	const [perfume, setPerfume] = useState<Perfume>({
-		_id: '',
-		name: '',
-		brand: '',
-		description: '',
-		sells: 0,
-		price: 0,
-		discount: 0,
-		createdAt: dayjs(), // Asegúrate de que dayjs esté importado y configurado correctamente
-		essence: { id: '', name: '', icon: '' },
-		status: 'draft', // O 'published', según el valor predeterminado que desees
-		stock: 0,
-		images: [],
-		slug: '',
-		gender: 'Unisex', // O 'male' o 'female', según el valor predeterminado que desees
-		family: '',
-		notes: [],
-	});
+	const [perfume, setPerfume] = useState<Perfume>(perfumeUtil);
 
 	useEffect(() => {
-		setPerfume(perfumes[0]);
+		setPerfume(perfumeUtil);
 	}, []);
 
 	const isDesktop = useMediaQuery(useTheme().breakpoints.up('md'));
@@ -70,7 +55,11 @@ export default function ProductPage(): JSX.Element {
 				</Box>
 
 				<Box display={{ xs: '', md: 'flex' }} justifyContent={'space-evenly'}>
-					<Box display={'flex'} justifyContent={'center'} pt={{ xs: 2, md: '' }}>
+					<Box
+						display={'flex'}
+						justifyContent={'center'}
+						pt={{ xs: 2, md: '' }}
+					>
 						<CarruselProduct item={perfume} />
 					</Box>
 					<Stack spacing={2} pl={{ xs: '', md: 5 }}>
@@ -85,7 +74,7 @@ export default function ProductPage(): JSX.Element {
 						</Typography>
 						<Typography variant='subtitle1'>Escencias</Typography>
 						<Box display={'flex'} justifyContent={'space-evenly'}>
-							{perfume.notes.map((note, index) => (
+							{perfume.essences.map((note, index) => (
 								<SimpleTag key={index} text={note} type='secondary' />
 							))}
 						</Box>

@@ -15,6 +15,7 @@ interface InputProps {
 	startIcon?: ReactNode;
 	endIcon?: ReactNode;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	type?: string;
 }
 
 export const Input = ({
@@ -29,6 +30,7 @@ export const Input = ({
 	maxLen,
 	startIcon,
 	endIcon,
+	type = 'text',
 	onChange,
 }: InputProps): JSX.Element => {
 	const InputAddedStyle: SxProps = {
@@ -46,11 +48,7 @@ export const Input = ({
 	return (
 		<TextField
 			fullWidth
-			sx={
-				added
-					? { ...InputAddedStyle, backgroundColor: '#f4f4f5' }
-					: { backgroundColor: '#f4f4f5' }
-			}
+			sx={added ? InputAddedStyle : {}}
 			autoFocus={autoFocus}
 			defaultValue={defaultValue}
 			inputProps={{ maxLength: maxLen }}
@@ -61,6 +59,7 @@ export const Input = ({
 			placeholder={label}
 			helperText={helperText}
 			onChange={onChange}
+			type={type}
 			InputProps={{
 				startAdornment: Boolean(startIcon) && (
 					<>
@@ -70,6 +69,7 @@ export const Input = ({
 				endAdornment: Boolean(endIcon) && (
 					<>{cloneElement(endIcon as React.ReactElement, { sx: iconStyle })}</>
 				),
+				sx: { backgroundColor: '#f4f4f5' },
 			}}
 		/>
 	);

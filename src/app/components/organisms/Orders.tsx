@@ -31,7 +31,7 @@ export function OrdersEmpty(): JSX.Element {
 			</Typography>
 			<Box display={'flex'} justifyContent={'space-evenly'}>
 				{Recomendations.slice(0, 4).map(perfume => (
-					<CardProduct key={perfume._id} perfume={perfume} />
+					<CardProduct key={perfume.id} perfume={perfume} />
 				))}
 			</Box>
 		</Stack>
@@ -153,12 +153,12 @@ export function DetailOrder(): JSX.Element {
 				</TableHead>
 				<TableBody>
 					{perfume.map((perfume: Perfume) => (
-						<TableRow key={perfume._id}>
+						<TableRow key={perfume.id}>
 							<TableCell sx={{ textAlign: 'center' }}>
 								<Typography>{perfume.name}</Typography>
 							</TableCell>
 							<TableCell sx={{ textAlign: 'center' }}>
-								<Typography>{perfume._id}</Typography>
+								<Typography>{perfume.id}</Typography>
 							</TableCell>
 							<TableCell sx={{ textAlign: 'center' }}>
 								<Typography>{1}</Typography>

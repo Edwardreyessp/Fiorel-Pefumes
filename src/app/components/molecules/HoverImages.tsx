@@ -3,12 +3,15 @@
 import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { IconEdit, IconTrash } from '../atoms';
+import Image from 'next/image';
 
 interface Props {
 	image: string;
 	bothIcons?: boolean;
 	handleEdit?: () => void;
 	handleDelete: () => void;
+	imageWidth: number;
+	imageHeight: number;
 }
 
 export const HoverImage = ({
@@ -16,6 +19,8 @@ export const HoverImage = ({
 	bothIcons = false,
 	handleEdit,
 	handleDelete,
+	imageWidth,
+	imageHeight,
 }: Props): JSX.Element => {
 	const [hover, setHover] = useState(false);
 	const [hoverEdit, setHoverEdit] = useState(false);
@@ -52,14 +57,19 @@ export const HoverImage = ({
 			onMouseEnter={handleHover}
 			onMouseLeave={handleLeave}
 		>
-			<img src={image} alt='product' width='100%' />
+			<Image
+				src={image}
+				alt='product'
+				width={imageWidth}
+				height={imageHeight}
+			/>
 			{hover && (
 				<Box
 					position='absolute'
 					top='0'
 					left='0'
-					width='100%'
-					height='calc(100% - 8.51px)'
+					width={imageWidth}
+					height={imageHeight}
 					bgcolor='rgba(0, 0, 0, 0.8)'
 					display='flex'
 					justifyContent='center'

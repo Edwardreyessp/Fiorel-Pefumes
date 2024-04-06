@@ -35,14 +35,12 @@ const NavButton = styled(Button)<ButtonProps>(({ theme }) => ({
 	fontSize: '19px',
 	textTransform: 'none',
 	color: '#000',
-
 }));
 
 export const Navbar = (): JSX.Element => {
 	const [showEnvios, setShowEnvios] = useState(false);
 	const [isTop, setIsTop] = useState(true);
 	const [lastScrollTop, setLastScrollTop] = useState(0);
-
 
 	useEffect(() => {
 		const handleScroll = (): void => {
@@ -79,23 +77,50 @@ export const Navbar = (): JSX.Element => {
 		};
 	}, []); // El array vacío como segundo argumento indica que este efecto solo se ejecuta una vez, similar a componentDidMoun
 
-
 	return (
 		<>
-			<AppBar>
+			<AppBar
+				position={'fixed'}
+				sx={{
+					backgroundColor: '#fff',
+					boxShadow: 'none',
+					borderBottom: '1px solid #B2CD27',
+				}}
+			>
 				{!showEnvios && (
-					<Box sx={{ backgroundColor: "#000" }} display={"flex"} justifyContent={"center"} height={"28px"}>
-						<Typography color={"#fff"} variant='caption' display={{ xs: "none", md: "block" }}>
-							&quot;Envíos gratis arriba de 799 pesos. ¡Gástalos y no te preocupes por el envío! 🎉📦&quot;
+					<Box
+						sx={{ backgroundColor: '#000' }}
+						display={'flex'}
+						justifyContent={'center'}
+						height={'28px'}
+					>
+						<Typography
+							color={'#fff'}
+							variant='caption'
+							display={{ xs: 'none', md: 'block' }}
+						>
+							&quot;Envíos gratis arriba de 799 pesos. ¡Gástalos y no te
+							preocupes por el envío! 🎉📦&quot;
 						</Typography>
-						<Typography color={"#fff"} variant='caption' display={{ xs: "block", md: "none" }}>
+						<Typography
+							color={'#fff'}
+							variant='caption'
+							display={{ xs: 'block', md: 'none' }}
+						>
 							&quot;¡Envíos gratis arriba de 799 pesos! 🎉📦&quot;
 						</Typography>
 					</Box>
 				)}
 				{isTop && (
-					<Toolbar sx={{ height: "47px", backgroundColor: "#fff", display: "flex", justifyContent: "space-between" }}  >
-						<Box display={{ xs: "block", md: "none" }}>
+					<Toolbar
+						sx={{
+							height: '47px',
+							backgroundColor: '#fff',
+							display: 'flex',
+							justifyContent: 'space-between',
+						}}
+					>
+						<Box display={{ xs: 'block', md: 'none' }}>
 							<MenuDrawer />
 						</Box>
 						<Link href='/'>
@@ -106,7 +131,10 @@ export const Navbar = (): JSX.Element => {
 								height={47}
 							/>
 						</Link>
-						<Box display={{ xs: "none", md: "flex" }} justifyContent={"space-evenly"}>
+						<Box
+							display={{ xs: 'none', md: 'flex' }}
+							justifyContent={'space-evenly'}
+						>
 							<Link href='/cuestionario'>
 								<NavButton variant='text' color='inherit'>
 									MI FRAGANCIA
@@ -119,13 +147,13 @@ export const Navbar = (): JSX.Element => {
 								</NavButton>
 							</Link>
 						</Box>
-						<Box display={"flex"} justifyContent={"space-evenly"} width={"10%"}>
+						<Box display={'flex'} justifyContent={'space-evenly'} width={'10%'}>
 							<CarrritoDrawer />
 
-							<Box display={{ xs: "none", md: "block" }}>
+							<Box display={{ xs: 'none', md: 'block' }}>
 								<SearchDrawer />
 							</Box>
-							<Box display={{ xs: "none", md: "block" }}>
+							<Box display={{ xs: 'none', md: 'block' }}>
 								<Link href='/auth'>
 									<IconButton>
 										<IconProfile />
@@ -179,12 +207,11 @@ const SearchDrawer = (): JSX.Element => {
 						padding: '8px',
 					}}
 				/>
-				<IconButton onClick={
-					(): void => {
+				<IconButton
+					onClick={(): void => {
 						setState(false);
-					}
-
-				}>
+					}}
+				>
 					<IconClose />
 				</IconButton>
 			</Box>
@@ -269,37 +296,33 @@ const CarrritoDrawer = (): JSX.Element => {
 		setState(open);
 	};
 
-
 	return (
-
 		<>
-			<IconButton
-				aria-label='Carrito'
-				onClick={toggleDrawer(true)}
-			>
+			<IconButton aria-label='Carrito' onClick={toggleDrawer(true)}>
 				<IconCart />
 			</IconButton>
-			<DrawerCart open={state} onClose={function (): void {
-				setState(false);
-			}} items={[]} />
+			<DrawerCart
+				open={state}
+				onClose={function (): void {
+					setState(false);
+				}}
+				items={[]}
+			/>
 		</>
-
 	);
-}
-
+};
 
 const MenuDrawer = (): JSX.Element => {
-	const [DrawerState, setDrawerState] = useState(false)
-	const [State, setState] = useState(false)
+	const [DrawerState, setDrawerState] = useState(false);
+	const [State, setState] = useState(false);
 
 	const onClose = (): void => {
 		setDrawerState(false);
-	}
+	};
 
 	const ChangeState = (): void => {
-		setState(!State)
-	}
-
+		setState(!State);
+	};
 
 	return (
 		<Fragment key={'right'}>
@@ -311,21 +334,27 @@ const MenuDrawer = (): JSX.Element => {
 			>
 				<IconMenu />
 			</IconButton>
-			<Drawer
-				anchor={'right'}
-				open={DrawerState}
-				onClose={onClose}
-			>
-				{!State ? FirstStateDrawer(onClose, ChangeState) : SecondStateDrawer(onClose, ChangeState)}
+			<Drawer anchor={'right'} open={DrawerState} onClose={onClose}>
+				{!State
+					? FirstStateDrawer(onClose, ChangeState)
+					: SecondStateDrawer(onClose, ChangeState)}
 			</Drawer>
 		</Fragment>
 	);
 };
 
-const FirstStateDrawer = (onClose: () => void, ChangeState: () => void): JSX.Element => {
+const FirstStateDrawer = (
+	onClose: () => void,
+	ChangeState: () => void,
+): JSX.Element => {
 	return (
-		<Box width={"100vw"} py={2}>
-			<Box display={"flex"} justifyContent={"space-between"} sx={{ borderBottom: "1px solid #000" }} px={2}>
+		<Box width={'100vw'} py={2}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+			>
 				<IconButton onClick={onClose}>
 					<Link href={'/auth'}>
 						<IconProfile />
@@ -335,32 +364,71 @@ const FirstStateDrawer = (onClose: () => void, ChangeState: () => void): JSX.Ele
 					<IconClose />
 				</IconButton>
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50}>
-				<Typography >Buscar</Typography>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+			>
+				<Typography>Buscar</Typography>
 				{/* Agregar buscador */}
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50} onClick={onClose}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+				onClick={onClose}
+			>
 				<Link href={'/cuestionario'}>
-					<Typography sx={{ color: "#000" }}>Mi fragancia</Typography>
+					<Typography sx={{ color: '#000' }}>Mi fragancia</Typography>
 				</Link>
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50} onClick={ChangeState}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+				onClick={ChangeState}
+			>
 				<Typography>Coleccion</Typography>
 				<IconArrowRight />
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50} onClick={onClose}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+				onClick={onClose}
+			>
 				<Link href={'/nostros'}>
-					<Typography sx={{ color: "#000" }}>Nostros</Typography>
+					<Typography sx={{ color: '#000' }}>Nostros</Typography>
 				</Link>
 			</Box>
 		</Box>
 	);
 };
 
-const SecondStateDrawer = (onClose: () => void, ChangeState: () => void): JSX.Element => {
+const SecondStateDrawer = (
+	onClose: () => void,
+	ChangeState: () => void,
+): JSX.Element => {
 	return (
-		<Box width={"100vw"} py={2}>
-			<Box display={"flex"} justifyContent={"space-between"} sx={{ borderBottom: "1px solid #000" }} px={2}>
+		<Box width={'100vw'} py={2}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+			>
 				<IconButton onClick={ChangeState}>
 					<IconArrrowLeft />
 				</IconButton>
@@ -368,25 +436,56 @@ const SecondStateDrawer = (onClose: () => void, ChangeState: () => void): JSX.El
 					<IconClose />
 				</IconButton>
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50}>
-				<Typography >Buscar</Typography>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+			>
+				<Typography>Buscar</Typography>
 				{/* Agregar buscador */}
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50} onClick={onClose}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+				onClick={onClose}
+			>
 				<Link href={'/mujer'}>
-					<Typography sx={{ color: "#000" }}>Mujer</Typography>
+					<Typography sx={{ color: '#000' }}>Mujer</Typography>
 				</Link>
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50} onClick={onClose}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+				onClick={onClose}
+			>
 				<Link href={'/hombre'}>
-					<Typography sx={{ color: "#000" }}>Hombre</Typography>
+					<Typography sx={{ color: '#000' }}>Hombre</Typography>
 				</Link>
 			</Box>
-			<Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} sx={{ borderBottom: "1px solid #000" }} px={2} height={50} onClick={onClose}>
+			<Box
+				display={'flex'}
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				sx={{ borderBottom: '1px solid #000' }}
+				px={2}
+				height={50}
+				onClick={onClose}
+			>
 				<Link href={'/sets'}>
-					<Typography sx={{ color: "#000" }}>Sets</Typography>
+					<Typography sx={{ color: '#000' }}>Sets</Typography>
 				</Link>
 			</Box>
 		</Box>
 	);
-}
+};

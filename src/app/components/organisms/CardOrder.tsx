@@ -76,7 +76,7 @@ export const CardOrder = (props: CardOrderProps): JSX.Element => {
 					<Typography variant='body2'>Productos</Typography>
 					{perfumes.map(perfume => (
 						<Box
-							key={perfume._id}
+							key={perfume.id}
 							display='flex'
 							justifyContent='space-between'
 							width='100%'
@@ -86,7 +86,7 @@ export const CardOrder = (props: CardOrderProps): JSX.Element => {
 								noWrap
 								sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
 							>
-								{perfume._id} - {perfume.name}
+								{perfume.id} - {perfume.name}
 							</Typography>
 							<Typography>${perfume.price}</Typography>
 						</Box>

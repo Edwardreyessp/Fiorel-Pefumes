@@ -1,65 +1,92 @@
-"use client"
-import { Box, Card, Typography, useTheme, useMediaQuery } from "@mui/material"
-import Image from "next/image"
-import { IconEdit, IconTrash } from "../atoms"
-import { useState } from "react"
+'use client';
+import { Box, Card, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
+import { IconEdit, IconTrash } from '../atoms';
+import { useState } from 'react';
+import type { Perfume } from '@/entities';
 
 interface CardInventarioProps {
-  urlImage: string
-  name: string
-  date: string
-  id: string
-  stock: number
-  isAvailable: boolean
-  IconEditFuction: () => void,
-  IconTrashFuction: () => void,
-  onClick: () => void
+	perfume: Perfume;
+	IconEditFuction: () => void;
+	IconTrashFuction: () => void;
 }
 
+export const CardInventario = ({
+	perfume,
+	IconEditFuction,
+	IconTrashFuction,
+}: CardInventarioProps): JSX.Element => {
+	const [isHovered, setIsHovered] = useState(false);
+	const [isHovered2, setIsHovered2] = useState(false);
+	const { name, stock, status, images, sells } = perfume;
 
+	const statusMap = {
+		published: '1px solid #45D053',
+		draft: '1px solid #FFC20A',
+	};
 
-export const CardInventario = ({ name, urlImage, date, id, stock, IconEditFuction, IconTrashFuction, onClick, isAvailable }: CardInventarioProps): JSX.Element => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"))
-  // Se utilizo media query para que el diseño sea responsivo , ya que al utilizar brekpoint se necesitabva mas de 2 breakpoints para que funcionara en todos los dispositivos
-  const [isHovered, setIsHovered] = useState(false);
-  const [isHovered2, setIsHovered2] = useState(false);
-
-  return (
-    <Card sx={{ display: "flex", width: "100%", height: "150", alignItems: "center", justifyContent: "space-between", p: "18px", border: isAvailable ? "1px solid #45D053" : "1px solid #FFC20A" }}  >
-      <Image src={urlImage} alt="Imagen producto" width={100} height={100} />
-      <Box display={"flex"} flexDirection={isDesktop ? "row" : "column"} justifyContent={isDesktop ? "space-around" : "center"} alignItems={"center"} width={"100%"} p={2}>
-        <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "150px" }}>{name}</Typography>
-        <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "150px" }}>{date}</Typography>
-        <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "150px" }}>{id}</Typography>
-        <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "150px" }}>{stock} unidades</Typography>
-      </Box>
-      <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100px"}> {/* Ajusta la altura al 100% */}
-        <Box
-          height={24}
-          onClick={IconEditFuction}
-          onPointerDown={(e) => { e.preventDefault(); }}
-          sx={{ cursor: "pointer" }}
-          onMouseEnter={() => { setIsHovered(true); }}
-          onMouseLeave={() => { setIsHovered(false); }}
-        >
-          <IconEdit color={isHovered ? "#000000" : "#999999"} />
-        </Box>
-        <Box
-          height={24}
-          onClick={IconTrashFuction}
-          onPointerDown={(e) => { e.preventDefault(); }}
-          sx={{ cursor: "pointer" }}
-          onMouseEnter={() => { setIsHovered2(true); }}
-          onMouseLeave={() => { setIsHovered2(false); }}
-        >
-          <IconTrash
-            color={isHovered2 ? "#FF2828" : "#999999"}
-          />
-        </Box>
-
-      </Box>
-    </Card>
-  )
-}
-
+	return (
+		<Card
+			sx={{
+				display: 'flex',
+				width: '100%',
+				height: '150',
+				alignItems: 'center',
+				justifyContent: 'space-between',
+				p: 2,
+				border: statusMap[status] ?? '1px solid #FF2828',
+				gap: 2,
+			}}
+		>
+			<Image src={images[0]} alt='Imagen producto' width={100} height={100} />
+			<Stack spacing={1} width='100%'>
+				<Typography variant='body2'>{name}</Typography>
+				<Stack>
+					<Typography variant='caption'>En stock: {stock}</Typography>
+					<Typography variant='caption'>Ventas: {sells}</Typography>
+				</Stack>
+			</Stack>
+			<Box
+				display={'flex'}
+				flexDirection={'column'}
+				justifyContent={'space-between'}
+				height={'100px'}
+			>
+				{' '}
+				{/* Ajusta la altura al 100% */}
+				<Box
+					height={24}
+					onClick={IconEditFuction}
+					onPointerDown={e => {
+						e.preventDefault();
+					}}
+					sx={{ cursor: 'pointer' }}
+					onMouseEnter={() => {
+						setIsHovered(true);
+					}}
+					onMouseLeave={() => {
+						setIsHovered(false);
+					}}
+				>
+					<IconEdit color={isHovered ? '#000000' : '#999999'} />
+				</Box>
+				<Box
+					height={24}
+					onClick={IconTrashFuction}
+					onPointerDown={e => {
+						e.preventDefault();
+					}}
+					sx={{ cursor: 'pointer' }}
+					onMouseEnter={() => {
+						setIsHovered2(true);
+					}}
+					onMouseLeave={() => {
+						setIsHovered2(false);
+					}}
+				>
+					<IconTrash color={isHovered2 ? '#FF2828' : '#999999'} />
+				</Box>
+			</Box>
+		</Card>
+	);
+};

@@ -21,7 +21,6 @@ export const Footer = (): JSX.Element => {
 	);
 };
 
-
 const handleSubmit = (email: string): void => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

@@ -1,7 +1,10 @@
 'use client';
+
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { Barlow_Condensed, Inter } from 'next/font/google';
+import { useContext } from 'react';
+import { ColorContext } from './components/organisms/ColorProvider';
 
 interface MuiThemeProps {
 	children: React.ReactNode;
@@ -16,10 +19,12 @@ const barlow = Barlow_Condensed({
 const inter = Inter({ subsets: ['latin'] });
 
 const MuiTheme = ({ children }: MuiThemeProps): JSX.Element => {
+	const { Color } = useContext(ColorContext);
+
 	const theme = createTheme({
 		palette: {
 			primary: {
-				main: '#B2CD27',
+				main: Color,
 			},
 			secondary: {
 				main: '#000000',

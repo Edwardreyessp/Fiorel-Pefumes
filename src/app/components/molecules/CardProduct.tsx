@@ -14,9 +14,13 @@ import type { Perfume } from '@/entities';
 
 interface Props {
 	perfume: Perfume;
+	isInteractive?: boolean;
 }
 
-export const CardProduct = ({ perfume }: Props): JSX.Element => {
+export const CardProduct = ({
+	perfume,
+	isInteractive = true,
+}: Props): JSX.Element => {
 	const primaryColor = useTheme().palette.primary.main;
 
 	const { name, description, images, price, discount } = perfume;
@@ -33,7 +37,11 @@ export const CardProduct = ({ perfume }: Props): JSX.Element => {
 					<Image
 						priority
 						style={{ borderRadius: '4px', width: '100%', height: 'auto' }}
-						src={images[0]}
+						src={
+							images.length === 0
+								? 'https://via.placeholder.com/150'
+								: images[0]
+						}
 						alt={name}
 						sizes='100vw'
 						width={500}
@@ -53,7 +61,7 @@ export const CardProduct = ({ perfume }: Props): JSX.Element => {
 							display: '-webkit-box',
 						}}
 					>
-						{name}
+						{name === '' ? 'Sin nombre' : name}
 					</Typography>
 					<Box
 						display='flex'
@@ -62,10 +70,10 @@ export const CardProduct = ({ perfume }: Props): JSX.Element => {
 						alignItems='center'
 						mb={1}
 					>
-						<Discount discount={discount ?? undefined} price={price} />
+						<Discount discount={Number(discount)} price={price} />
 						<Box
-							onClick={handleClick}
-							sx={{ cursor: 'pointer' }}
+							onClick={isInteractive ? handleClick : undefined}
+							sx={{ cursor: isInteractive ? 'pointer' : 'default' }}
 							display='flex'
 							alignItems='center'
 							height='24px'
@@ -84,7 +92,7 @@ export const CardProduct = ({ perfume }: Props): JSX.Element => {
 							display: '-webkit-box',
 						}}
 					>
-						{description}
+						{description === '' ? 'Sin descripción' : description}
 					</Typography>
 				</Stack>
 			</CardContent>

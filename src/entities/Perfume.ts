@@ -1,7 +1,7 @@
 import { type Dayjs } from 'dayjs';
 
 export interface Perfume {
-	_id: string;
+	id: string;
 	name: string;
 	brand: string; // Inspirational brand
 	description: string;
@@ -9,41 +9,18 @@ export interface Perfume {
 	price: number;
 	discount: number;
 	createdAt: Dayjs;
-	essence: Essence;
 	status: PerfumeStatus;
 	stock: number;
 	images: string[];
 	slug: string;
 	// Questionary attributes
-	gender: categoryName;
+	category: categoryName;
 	family: string;
-	notes: string[];
+	essences: string[];
 }
 
 export type categoryName = 'Mujer' | 'Hombre' | 'Unisex';
 export type PerfumeStatus = 'published' | 'draft';
-
-export interface Category {
-	id: string;
-	name: categoryName;
-	idFamilies: string[];
-}
-
-export interface Family {
-	id: string;
-	name: string;
-	icon: string;
-	// idCategory: string;
-	idEssences: string[];
-}
-
-export interface Essence {
-	id: string;
-	name: string;
-	icon: string;
-	// idCategory: string;
-	// idFamily: string;
-}
 
 export interface PerfumeCategory {
 	id: string;
