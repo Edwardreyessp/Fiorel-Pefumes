@@ -1,14 +1,14 @@
 'use client';
-// import SwipeableViews from 'react-swipeable-views';
-// import { autoPlay } from 'react-swipeable-views-utils';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
 import { Box, MobileStepper, useMediaQuery, useTheme } from '@mui/material';
 import { type Perfume } from '@/entities';
 import { useState } from 'react';
 import { IconArrowRight, IconArrrowLeft } from '.';
-// import { CardEssence } from '../molecules';
-// import Image from 'next/image';
+import { CardEssence } from '../molecules';
+import Image from 'next/image';
 
-// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface CarruselComponentProps {
 	items: Perfume[];
@@ -18,7 +18,7 @@ export const CarruselComponent = ({
 	items,
 }: CarruselComponentProps): JSX.Element => {
 	const [activeStep, setActiveStep] = useState(0);
-	// const theme = useTheme();
+	const theme = useTheme();
 	const len = items.length;
 
 	const handleAddStep = (): void => {
@@ -51,7 +51,7 @@ export const CarruselComponent = ({
 				<IconArrrowLeft />
 			</Box>
 			<Box sx={{ width: { xs: 183, sm: 300 } }}>
-				{/* <AutoPlaySwipeableViews
+				<AutoPlaySwipeableViews
 					axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 					index={activeStep}
 				>
@@ -64,7 +64,7 @@ export const CarruselComponent = ({
 							/>
 						</Box>
 					))}
-				</AutoPlaySwipeableViews> */}
+				</AutoPlaySwipeableViews>
 			</Box>
 			<Box
 				onClick={handleAddStep}
@@ -124,7 +124,7 @@ export const CarruselProduct = ({
 				<IconArrrowLeft />
 			</Box>
 			<Box width={isDesktop ? 350 : 300}>
-				{/* <AutoPlaySwipeableViews
+				<AutoPlaySwipeableViews
 					axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 					index={activeStep}
 				>
@@ -138,7 +138,7 @@ export const CarruselProduct = ({
 							/>
 						</Box>
 					))}
-				</AutoPlaySwipeableViews> */}
+				</AutoPlaySwipeableViews>
 			</Box>
 			<Box
 				onClick={handleAddStep}
@@ -160,17 +160,17 @@ export interface CarruselImageProps {
 
 export const CarruselImage = ({ images }: CarruselImageProps): JSX.Element => {
 	const primaryColor = useTheme().palette.primary.main;
-	// const theme = useTheme();
-	// const [activeStep, setActiveStep] = useState(0);
+	const theme = useTheme();
+	const [activeStep, setActiveStep] = useState(0);
 	const maxSteps = images.length;
 
-	// const handleStepChange = (step: number): void => {
-	// 	setActiveStep(step);
-	// };
+	const handleStepChange = (step: number): void => {
+		setActiveStep(step);
+	};
 
 	return (
 		<Box position={'relative'}>
-			{/* <AutoPlaySwipeableViews
+			<AutoPlaySwipeableViews
 				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 				index={activeStep}
 				onChangeIndex={handleStepChange}
@@ -190,7 +190,7 @@ export const CarruselImage = ({ images }: CarruselImageProps): JSX.Element => {
 						}}
 					></Box>
 				))}
-			</AutoPlaySwipeableViews> */}
+			</AutoPlaySwipeableViews>
 
 			<Box
 				position='absolute'
@@ -212,7 +212,7 @@ export const CarruselImage = ({ images }: CarruselImageProps): JSX.Element => {
 							backgroundColor: primaryColor,
 						},
 					}}
-					// activeStep={activeStep}
+					activeStep={activeStep}
 					backButton={undefined}
 					nextButton={undefined}
 				/>
