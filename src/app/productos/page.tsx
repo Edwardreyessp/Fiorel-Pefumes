@@ -260,7 +260,7 @@ export default function ProductsPage(): JSX.Element {
 							<FormControlLabel
 								value='Todos'
 								control={<Radio />}
-								label='Popularidad'
+								label='Todos'
 							/>
 							<FormControlLabel
 								value='Mujer'
