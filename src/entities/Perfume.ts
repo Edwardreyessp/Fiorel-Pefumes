@@ -19,7 +19,14 @@ export interface Perfume {
 	essences: string[];
 }
 
-export type categoryName = 'Mujer' | 'Hombre' | 'Unisex';
+export type categoryName =
+	| 'Mujer'
+	| 'Hombre'
+	| 'Unisex'
+	| 'woman'
+	| 'man'
+	| 'unisex'
+	| 'sets';
 export type PerfumeStatus = 'published' | 'draft';
 
 export interface PerfumeCategory {

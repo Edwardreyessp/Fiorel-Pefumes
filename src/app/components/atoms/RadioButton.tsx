@@ -1,5 +1,10 @@
 'use client';
-import { type Dispatch, type SetStateAction, useState, cloneElement } from 'react';
+import {
+	type Dispatch,
+	type SetStateAction,
+	useState,
+	cloneElement,
+} from 'react';
 import {
 	Button,
 	FormControl,
@@ -84,6 +89,7 @@ export const RowButtonGroup = ({
 				borderRadius: '500px',
 				minWidth: '150px',
 				height: '48px',
+				color: selectedValue === value ? 'white' : 'black',
 			}}
 		>
 			{value}
@@ -99,7 +105,6 @@ export const RowButtonGroup = ({
 	);
 };
 
-
 export interface RadioButtonProps {
 	value: string;
 	onClick: () => void;
@@ -107,7 +112,12 @@ export interface RadioButtonProps {
 	EndIcon?: JSX.Element;
 }
 
-export const RadioButton = ({ value, onClick, StartIcon, EndIcon }: RadioButtonProps): JSX.Element => {
+export const RadioButton = ({
+	value,
+	onClick,
+	StartIcon,
+	EndIcon,
+}: RadioButtonProps): JSX.Element => {
 	return (
 		<Button
 			variant={'contained'}
@@ -115,7 +125,6 @@ export const RadioButton = ({ value, onClick, StartIcon, EndIcon }: RadioButtonP
 			onClick={() => {
 				onClick();
 			}}
-
 			startIcon={
 				StartIcon !== undefined
 					? cloneElement(StartIcon, { color: 'white' })
@@ -137,5 +146,5 @@ export const RadioButton = ({ value, onClick, StartIcon, EndIcon }: RadioButtonP
 			{StartIcon}
 			{value}
 		</Button>
-	)
-}
+	);
+};
