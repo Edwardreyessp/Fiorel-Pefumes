@@ -10,12 +10,18 @@ import {
 	orderBy,
 	updateDoc,
 	deleteDoc,
+	type OrderByDirection,
 } from 'firebase/firestore';
 
-export const getInventory = async (): Promise<DocumentData> => {
+export const getInventory = async (sort?: string): Promise<DocumentData> => {
 	try {
+		const stringSort = sort ?? 'name';
+		const order = stringSort.split('.')[0];
+		const ascendent =
+			(stringSort.split('.')[1] as OrderByDirection) ??
+			('asc' as OrderByDirection);
 		const collectionRef = collection(db, 'perfumes');
-		const q = query(collectionRef, orderBy('name'));
+		const q = query(collectionRef, orderBy(order ?? 'name', ascendent));
 
 		const querySnapshot = await getDocs(q);
 		return querySnapshot.docs.map(doc => doc.data());

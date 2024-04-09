@@ -7,14 +7,19 @@ import { CardProduct } from '../components/molecules';
 
 export const ProductList = ({
 	category,
+	search,
+	sorter,
 }: {
 	category: string;
+	search: string;
+	sorter: string;
 }): JSX.Element => {
 	const [products, setProducts] = useState<Perfume[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		getInventory()
+		setIsLoading(true);
+		getInventory(sorter)
 			.then(data => {
 				setProducts(data as Perfume[]);
 				setIsLoading(false);
@@ -22,14 +27,19 @@ export const ProductList = ({
 			.catch(error => {
 				console.error('Error getting inventory:', error);
 			});
-	}, []);
+	}, [sorter]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 
 	return (
-		<Box display='flex' flexWrap='wrap' gap={4} justifyContent='center'>
+		<Box
+			display='flex'
+			flexWrap='wrap'
+			gap={{ xs: 2, md: 4 }}
+			justifyContent='center'
+		>
 			{products
 				.filter(product => {
 					if (category === 'Todos') return true;
@@ -38,6 +48,10 @@ export const ProductList = ({
 					if (category === 'Hombre') return product.category === 'man';
 					if (category === 'Unisex') return product.category === 'unisex';
 					return product.category === category;
+				})
+				.filter(product => {
+					if (search === '') return true;
+					return product.name.toLowerCase().includes(search.toLowerCase());
 				})
 				.map(product => (
 					<CardProduct key={product.id} perfume={product} />
